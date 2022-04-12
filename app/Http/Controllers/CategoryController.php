@@ -64,18 +64,18 @@ class CategoryController extends Controller
         Session::flash('message','Categoty Created Successfully');
         Session::flash('alert-class','alert-success');
 
-        // $latestCategory = Category::latest()->first();
-        // $admins = User::where('is_admin', 1)->get();
-        // foreach ($admins as $admin) {
-        //     $admin->notify(new NewCategory($latestCategory));
-        // }
+        $latestCategory = Category::latest()->first();
+        $admins = User::where('is_admin', 1)->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new NewCategory($latestCategory));
+        }
 
-        // toastr()->success('Discussion Started successfully!');
-        // Telegram::sendMessage([
-        //     'chat_id'=>env('TELEGRAM_CHAT_ID', '-1001162615538'),
-        //     'parse_mode'=>'HTML',
-        //     'text'=>'<b>'.auth()->user()->name."</b>"." Created Category "."<b>".$request->title."</b>"
-        // ]);
+        toastr()->success('Category Created successfully!');
+        Telegram::sendMessage([
+            'chat_id'=>env('TELEGRAM_CHAT_ID', '-1001162615538'),
+            'parse_mode'=>'HTML',
+            'text'=>'<b>'.auth()->user()->name."</b>"." Created Category "."<b>".$request->title."</b>"
+        ]);
         return back();
     }
 
@@ -139,6 +139,8 @@ class CategoryController extends Controller
         $category->save();
         Session::flash('message', 'Category Updated Successfully');
         Session::flash('alert-class', 'alert-success');
+        toastr()->success('Category Updated Successfully');
+
         return back();
     }
 
@@ -155,6 +157,7 @@ class CategoryController extends Controller
 
         Session::flash('message', 'Category Deleted Successfully');
         Session::flash('alert-class', 'alert-success');
+        toastr()->warning('Category Deleted Successfully');
         return back();
     }
 
@@ -164,19 +167,19 @@ class CategoryController extends Controller
     // * @param
     // * @return \Illuminate\Http\Response
     // */
-    // public function search(Request $request)
-    // {
-    //     $user = new User;
-    //     $users_online =  $user->allOnline();
-    //     $forumsCount = count(Forum::all());
-    //     $topicsCount = count(Discussion::all());
-    //     $totalMembers = count(User::all());
-    //     $newest = User::latest()->first();
-    //     $totalCategories = count(Category::all());
-    //     $categories = Category::query()->where('desc', 'LIKE', "%{$request->keyword}%")->get();
-    //     // dd($categories);
-    //     $few_users = User::latest()->take(5)->get();
-    //     return view('welcome', \compact('categories', 'forumsCount', 'topicsCount', 'newest', 'totalMembers', 'totalCategories', 'users_online', 'few_users'));
-    //     return back();
-    // }
+    public function search(Request $request)
+    {
+        $user = new User;
+        $users_online =  $user->allOnline();
+        $forumsCount = count(Forum::all());
+        $topicsCount = count(Discussion::all());
+        $totalMembers = count(User::all());
+        $newest = User::latest()->first();
+        $totalCategories = count(Category::all());
+        $categories = Category::query()->where('desc', 'LIKE', "%{$request->keyword}%")->get();
+        // dd($categories);
+        $few_users = User::latest()->take(5)->get();
+        return view('welcome', \compact('categories', 'forumsCount', 'topicsCount', 'newest', 'totalMembers', 'totalCategories', 'users_online', 'few_users'));
+        return back();
+    }
 }

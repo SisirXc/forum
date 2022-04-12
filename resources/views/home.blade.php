@@ -159,7 +159,7 @@
                                         <!-- Post -->
                                         <div class="post clearfix">
                                             <div class="user-block">
-                                               @if ($latest->user->image))
+                                               @if ($latest->user->image)
                                                <img class="img-circle img-bordered-sm" height="50" width="50" src="{{asset('/storage/profile/'.$latest->user->image)}}" alt="User Image">
                                                @else
                                                <img class="img-circle img-bordered-sm" height="50" width="50" src="{{asset('/images/profile.png')}}" alt="User Image">

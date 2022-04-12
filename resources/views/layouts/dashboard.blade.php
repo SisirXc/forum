@@ -9,10 +9,10 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="img/favicon.png">
 
-  <title>Admin Panel </title>
+  <title>Admin DP</title>
 
   <!-- Bootstrap CSS -->
-
+  
   <!-- Bootstrap CSS -->
   <link
   rel="stylesheet"
@@ -48,7 +48,7 @@
   <link href="{{asset('admin/css/xcharts.min.css')}}" rel=" stylesheet">
   <link href="{{asset('admin/css/jquery-ui-1.10.4.min.css')}}" rel="stylesheet">
 
-
+  @toastr_css
   <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 
 </head>
@@ -236,7 +236,9 @@
         });
       });
     </script>
-
+ @jquery
+ @toastr_js
+ @toastr_render
 </body>
 
 </html>

@@ -28,16 +28,16 @@ class FrontendController extends Controller
 
     public function categoryOverview($id)
     {
-    //     $user = new User;
-    //     $users_online =  $user->allOnline();
-    //     $forumsCount = count(Forum::all());
-    //     $topicsCount = count(Discussion::all());
-    //     $totalMembers = count(User::all());
-    //     $newest = User::latest()->first();
-    //     $totalCategories = count(Category::all());
+        $user = new User;
+        $users_online =  $user->allOnline();
+        $forumsCount = count(Forum::all());
+        $topicsCount = count(Discussion::all());
+        $totalMembers = count(User::all());
+        $newest = User::latest()->first();
+        $totalCategories = count(Category::all());
         $category = Category::find($id);
 
-        return view('client.category-overview', \compact('category'));//, 'forumsCount', 'topicsCount', 'newest', 'totalMembers', 'totalCategories', 'users_online'));
+        return view('client.category-overview', \compact('category', 'forumsCount', 'topicsCount', 'newest', 'totalMembers', 'totalCategories', 'users_online'));
     }
 
     public function forumOverview($id)
@@ -46,36 +46,36 @@ class FrontendController extends Controller
         return view('client.forum-overview', \compact('forum'));
     }
 
-    // public function profile($id)
-    // {
-    //     $latest_user_post = Discussion::where('user_id', $id)->latest()->first();
-    //     $latest = Discussion::latest()->first();
-    //     $user = User::find($id);
-    //     return view('client.user_profile', \compact('user', 'latest', 'latest_user_post'));
-    // }
-    // public function users()
-    // {
-    //     $users = User::latest()->paginate(10);
-    //     return view('client.users', \compact('users'));
-    // }
+    public function profile($id)
+    {
+        $latest_user_post = Discussion::where('user_id', $id)->latest()->first();
+        $latest = Discussion::latest()->first();
+        $user = User::find($id);
+        return view('client.user_profile', \compact('user', 'latest', 'latest_user_post'));
+    }
+    public function users()
+    {
+        $users = User::latest()->paginate(10);
+        return view('client.users', \compact('users'));
+    }
 
-    // public function photoUpdate(Request $request, $id)
-    // {
-    //     if (!$request->profile_image) {
-    //         toastr()->error('Please select Image!');
-    //         return back();
-    //     }
+    public function photoUpdate(Request $request, $id)
+    {
+        if (!$request->profile_image) {
+            toastr()->error('Please select Image!');
+            return back();
+        }
 
-    //     $image = $request->profile_image;
-    //     $name = $image->getClientOriginalName();
-    //     $new_image = time().$name;
-    //     $dir = 'storage/profile/';
-    //     $image->move($dir, $new_image);
+        $image = $request->profile_image;
+        $name = $image->getClientOriginalName();
+        $new_image = time().$name;
+        $dir = 'storage/profile/';
+        $image->move($dir, $new_image);
 
-    //     $user = User::find($id);
-    //     $user->image = $new_image;
-    //     $user->save();
-    //     toastr()->success('The profile photo updated successfully');
-    //     return back();
-    // }
+        $user = User::find($id);
+        $user->image = $new_image;
+        $user->save();
+        toastr()->success('The profile photo updated successfully');
+        return back();
+    }
 }

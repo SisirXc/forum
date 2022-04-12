@@ -117,46 +117,46 @@ class DiscussionController extends Controller
         //     $admin->notify(new NewReply($latestReply));
         // }
 
-        // Telegram::sendMessage([
-        //     'chat_id'=>env('TELEGRAM_CHAT_ID', '-1001162615538'),
-        //     'parse_mode'=>'HTML',
-        //     'text'=>'<b>'.auth()->user()->name."</b>"." Replied to the topic "."<b>".$discussion->title." : "."</b>"."\n".$request->desc."\n"."<a href='".$url."'>Read it here</a>"
-        // ]);
+        Telegram::sendMessage([
+            'chat_id'=>env('TELEGRAM_CHAT_ID', '-1001162615538'),
+            'parse_mode'=>'HTML',
+            'text'=>'<b>'.auth()->user()->name."</b>"." Replied to the topic "."<b>".$discussion->title." : "."</b>"."\n".$request->desc."\n"."<a href='".$url."'>Read it here</a>"
+        ]);
 
         toastr()->success('Reply saved successfully!');
 
         return back();
     }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     //
-    // }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $reply = DiscussionReply::find($id);
@@ -164,44 +164,44 @@ class DiscussionController extends Controller
         toastr()->success('Reply deleted successfully!');
         return back();
     }
-    // public function updates()
-    // {
-    //     $updates = Telegram::getUpdates();
+    public function updates()
+    {
+        $updates = Telegram::getUpdates();
 
-    //     dd($updates);
-    // }
+        dd($updates);
+    }
 
-    // public function remove($id)
-    // {
-    //     $discussion = Discussion::find($id);
-    //     $discussion->delete();
-    //     toastr()->success('Reply saved successfully!');
-    //     return back();
-    // }
+    public function remove($id)
+    {
+        $discussion = Discussion::find($id);
+        $discussion->delete();
+        toastr()->success('Reply saved successfully!');
+        return back();
+    }
 
-    // public function sort(Request $request)
-    // {
-    //     if ($request->time_posted =="none"||$request->author =="none"||$request->direction =="none") {
-    //         toastr()->error('Please sect at least one sorting criteria!');
-    //         return back();
-    //     }
-    //     $topics = null;
+    public function sort(Request $request)
+    {
+        if ($request->time_posted =="none"||$request->author =="none"||$request->direction =="none") {
+            toastr()->error('Please sect at least one sorting criteria!');
+            return back();
+        }
+        $topics = null;
 
 
-    //     switch ($topics) {
-    //         case $request->time_posted =="latest":
-    //             $topics = Discussion::latest()->paginate(20);
-    //             break;
-    //             case $request->time_posted =="oldest":
-    //                 $topics = Discussion::oldest()->paginate(20);
-    //                 break;
-    //         default:
-    //         toastr()->error('No topics Found!');
-    //             break;
-    //     }
+        switch ($topics) {
+            case $request->time_posted =="latest":
+                $topics = Discussion::latest()->paginate(20);
+                break;
+                case $request->time_posted =="oldest":
+                    $topics = Discussion::oldest()->paginate(20);
+                    break;
+            default:
+            toastr()->error('No topics Found!');
+                break;
+        }
 
-    //     return back()->withTopics($topics);
-    // }
+        return back()->withTopics($topics);
+    }
 
     // public function like($id)
     // {

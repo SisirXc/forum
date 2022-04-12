@@ -16,10 +16,7 @@ class Forum extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
-    // public function topic()
-    // {
-    //     return $this->hasMany('App\Models\topic');
-    // }
+    
 
     public function discussions()
     {

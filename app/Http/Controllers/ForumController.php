@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Models\Category;
+use Illuminate\Support\Facades\Session;
+use App\Notifications\NewForum;
 use App\Models\Forum;
+
+use App\Models\User;
+use Telegram;
 
 class ForumController extends Controller
 {
@@ -46,6 +50,20 @@ class ForumController extends Controller
         Forum::create($request->all());
         Session::flash('message', 'Forum  Created Successfully');
         Session::flash('alert-class', 'alert-success');
+        toastr()->success('Forum Started successfully!');
+
+        $latestForum = Forum::latest()->first();
+        $admins = User::where('is_admin', 1)->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new NewForum($latestForum));
+        }
+
+        toastr()->success('Category Created successfully!');
+        Telegram::sendMessage([
+            'chat_id'=>env('TELEGRAM_CHAT_ID', '-1001162615538'),
+            'parse_mode'=>'HTML',
+            'text'=>'<b>'.auth()->user()->name."</b>"." Created Category "."<b>".$request->title."</b>"
+        ]);
         return back();
     }
 

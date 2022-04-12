@@ -46,7 +46,7 @@
         <nav class="navbar navbar-dark bg-dark">
           <div class="container">
             <h1>
-                <a href="#" class="navbar-brand">Online Discussion Forum</a>
+                <a href="/" class="navbar-brand">Online Discussion Forum</a>
               </h1>
             {{-- <h1>
               @if ($settings->forum_name)
